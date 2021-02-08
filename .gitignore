@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# Generated folders
+themes/
+.themes_cache
+
 # C extensions
 *.so
 
