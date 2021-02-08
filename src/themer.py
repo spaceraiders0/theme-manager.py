@@ -2,6 +2,7 @@
 
 import sys
 import definitions
+from pathlib import Path
 from argparse import ArgumentParser
 
 commands = {
@@ -10,6 +11,9 @@ commands = {
     "load-theme": definitions.load_theme,
     "new-theme": definitions.new_theme,
 }
+
+# Generate required files.
+definitions.generate_tree()
 
 ThemerParser = ArgumentParser(description="""A theme manager for Linux.""")
 ThemerParser.add_argument("action")

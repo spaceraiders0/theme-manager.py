@@ -11,6 +11,35 @@ CACHE_FILE = ROOT_DIR / Path(".theme_cache")
 SKELETON_FOLDER = THEMES_FOLDER / Path("skeleton")
 
 
+def generate_tree():
+    """Generates the needed files and folders.
+    """
+
+    SKELETON_INIT = SKELETON_FOLDER / Path("init.sh")
+    SKELETON_DEINIT = SKELETON_FOLDER / Path("deinit.sh")
+
+    if not CACHE_FILE.exists():
+        open(CACHE_FILE, "x").close()
+
+    if not THEMES_FOLDER.exists():
+        THEMES_FOLDER.mkdir()
+
+    if not SKELETON_FOLDER.exists():
+        SKELETON_FOLDER.mkdir()
+    
+    if not SKELETON_INIT.exists():
+        open(SKELETON_INIT, "x").close()
+
+        with open(SKELETON_INIT, "w") as INIT_FILE:
+            INIT_FILE.write("#!/usr/bin/env bash\n")
+
+    if not SKELETON_DEINIT.exists():
+        open(SKELETON_DEINIT, "x").close()
+
+        with open(SKELETON_DEINIT, "w") as INIT_FILE:
+            INIT_FILE.write("#!/usr/bin/env bash\n")
+
+
 def new_theme(theme_name: str):
     """Generates a new theme if the skeleton folder exists.
 
