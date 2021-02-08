@@ -3,9 +3,9 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# Generated folders
+# Generated objects
 themes/
-.themes_cache
+.theme_cache
 
 # C extensions
 *.so
