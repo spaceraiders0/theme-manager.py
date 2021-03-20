@@ -9,7 +9,7 @@ processes, move files, etc. The ``deinit`` file reverses these changes. There is
 contains color information used by the theme. This is mainly just for external programs.
 
 ## Installation
-To install, simply run the script ``installation.py`` with sudo privileges. The main script is symlinked to ``/usr/local/bin/``
+To install, simply run the script ``install.py -i`` with sudo privileges. The main script is symlinked to ``/usr/local/bin/``
 by default, but can be changed.
 
 ## Commands

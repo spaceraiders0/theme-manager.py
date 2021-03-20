@@ -5,6 +5,7 @@
 
 import os
 import sys
+import shutil
 import subprocess
 from pathlib import Path
 from argparse import ArgumentParser
@@ -12,6 +13,7 @@ from argparse import ArgumentParser
 root_dir = Path(sys.argv[0]).parent.absolute()
 EXECUTABLE_PATH = root_dir / Path("src/themer.py")
 INSTALLATION_DIRECTORY = Path("/usr/local/bin")
+INSTALLED_PATH = shutil.which(f"{EXECUTABLE_PATH.name}")
 
 install_parser = ArgumentParser(description="Installs a script.")
 install_parser.add_argument("-i", "--install", action="store_true",
@@ -32,22 +34,20 @@ try:
     location = str(install_args.target)
 
     if install_args.install is True:
+        if INSTALLED_PATH is not None:
+            print("Script already installed.")
+            sys.exit(1)
+
         print(f"Symlinking {str(EXECUTABLE_PATH)} to {location}")
         code = subprocess.run(["ln", "-s", str(EXECUTABLE_PATH), location],
                               stderr=subprocess.DEVNULL)
-
-        if code == 0:
-            print("Installation complete.")
-        else:
-            print("Installation failed.")
     else:
+        if INSTALLED_PATH is None:
+            print("No installed script detected.")
+            sys.exit(1)
+
         print(f"Removing symlink pointing to {str(EXECUTABLE_PATH)} from {location}")
         code = subprocess.run(["rm", f"{location}/{EXECUTABLE_PATH.name}"],
                               stderr=subprocess.DEVNULL)
-
-        if code == 0:
-            print("Uninstallation was successful.")
-        else:
-            print("Uninstalltion was unsuccessful.")
 except subprocess.CalledProcessError:
     print("Installation was unsuccessful.")
