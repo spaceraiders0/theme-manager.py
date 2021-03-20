@@ -9,8 +9,52 @@ processes, move files, etc. The ``deinit`` file reverses these changes. There is
 contains color information used by the theme. This is mainly just for external programs.
 
 ## Installation
-To install, simply run the script ``install.py -i`` with sudo privileges. The main script is symlinked to ``/usr/local/bin/``
-by default, but can be changed. Uninstalling the script can be done using ``install.py -u``
+Installation is quite simple. To start, go to a directory where you would like to store the script, and run the following
+command in your terminal:
+```bash
+$ git clone https://github.com/spaceraiders0/theme-manager.py
+```
+Then..
+```bash
+$ cd theme-manager.py/
+```
+Then..
+```bash
+$ ./install.py -i
+```
+And that is all you must do. You can then execute the script from anywhere you would like.
+
+## Uninstallation
+Uninstallation is also quite simple. Simply go to the root directory of the application, and run the following command:
+```bash
+$ ./install.py -u
+```
+And the script should be automatically removed.
+
+## Basic Usage
+Assuming you have followed the installation steps above, you may want to create your own "theme." To get started, execute
+the following command in your shell:
+```
+$ themer.py new-theme theme_name_here
+```
+That will create a new skeleton / template theme in the new ``themes`` directory. To begin making your theme, navigate to
+the new directory, and edit the ``init.sh`` file. There, you can put any commands that should be executed to replicate your
+current layout. You should also edit the ``deinit.sh`` file, which should scripted to reverse the actions done by the
+``init.sh`` file. From here, you can now do:
+```bash
+$ themer.py load-theme theme_name
+```
+To load your theme. This will also automatically unload any theme that is already loaded, so you do not need to do it manually.
+```bash
+$ themer.py unload-theme
+```
+To unload your currently loaded theme. 
+</br></br>
+You can also edit the ``colors.txt`` file, which will allow the color information of your theme to be read by external
+programs using the following command:
+```bash
+$ themer.py get-colors
+```
 
 ## Commands
 There are a few commands packaged with this program. They are:
