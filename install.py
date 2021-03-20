@@ -41,7 +41,7 @@ try:
         print(f"Symlinking {str(EXECUTABLE_PATH)} to {location}")
         code = subprocess.run(["ln", "-s", str(EXECUTABLE_PATH), location],
                               stderr=subprocess.DEVNULL)
-    elif install.uninstall is True:
+    elif install_args.uninstall is True:
         if INSTALLED_PATH is None:
             print("No installed script detected.")
             sys.exit(1)
