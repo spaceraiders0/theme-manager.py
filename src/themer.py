@@ -2,29 +2,36 @@
 
 import sys
 import definitions
-from pathlib import Path
 from argparse import ArgumentParser
 
+theme_controller = definitions.ThemeManager()
 commands = {
-    "display-theme": definitions.display_theme,
-    "unload-theme": definitions.unload_theme,
-    "load-theme": definitions.load_theme,
-    "new-theme": definitions.new_theme,
+    "get-theme": theme_controller.get_last_theme,
+    "get-colors": theme_controller.get_colors,
+    "get-path": theme_controller.get_theme_folder,
+    "get-controls": theme_controller.get_controls,
+    "unload-theme": theme_controller.unload_theme,
+    "load-theme": theme_controller.load_theme,
+    "new-theme": theme_controller.new_theme,
 }
 
-# Generate required files.
-definitions.generate_tree()
-
-ThemerParser = ArgumentParser(description="""A theme manager for Linux.""")
-ThemerParser.add_argument("action")
-ThemerParser.add_argument("subcommands", nargs="*")
-themer_args = ThemerParser.parse_args()
+themer_parser = ArgumentParser(description="A theme manager for Linux.")
+themer_parser.add_argument("action")
+themer_parser.add_argument("subcommands", nargs="*")
+themer_args = themer_parser.parse_args()
 
 # Load and execute the command.
 for command_name, command_func in commands.items():
     if command_name == themer_args.action:
         try:
-            command_func(*themer_args.subcommands)
+            output = command_func(*themer_args.subcommands)
+
+            if output is not None:
+                if isinstance(output, (list, tuple)):
+                    print("\n".join(map(str, output)))
+                else:
+                    print(str(output))
+
             sys.exit(0)
         except TypeError:
             print(f"{len(themer_args.subcommands)} is an invalid number of arguments.")
