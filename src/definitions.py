@@ -30,11 +30,6 @@ class ThemeNotFoundError(Exception):
 
 class ThemeManager():
     def __init__(self, theme_folder_overwrite: Path = themes_folder):
-        themes_folder = theme_folder_overwrite 
-
-        if themes_folder.exists() is False:
-            raise ValueError("Themes folder does not exist.")
-
         # Initialize the file structure.
         for new_path, is_dir in self._iter_structure(root_dir, file_structure):
             if new_path.exists() is False:
@@ -44,6 +39,13 @@ class ThemeManager():
                     with open(new_path, "w+") as file_buffer:
                         if isinstance(is_dir, str):
                             file_buffer.write(is_dir)
+
+        themes_folder = theme_folder_overwrite 
+
+        if themes_folder.exists() is False:
+            raise ValueError("Themes folder does not exist.")
+
+
 
     @staticmethod
     def _iter_structure(root: Path, structure: dict) -> (Path, bool):
