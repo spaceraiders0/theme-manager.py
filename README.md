@@ -10,7 +10,7 @@ contains color information used by the theme. This is mainly just for external p
 
 ## Installation
 To install, simply run the script ``install.py -i`` with sudo privileges. The main script is symlinked to ``/usr/local/bin/``
-by default, but can be changed.
+by default, but can be changed. Uninstalling the script can be done using ``install.py -u``
 
 ## Commands
 There are a few commands packaged with this program. They are:
