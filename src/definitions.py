@@ -132,7 +132,6 @@ class ThemeManager():
         :type theme_folder: Path, str
         :return: a list of colors from the colors file
         :rtype: list
-        :raises: ThemeNotFoundError, FileNotFoundError
         """
 
         # Try to find path to the theme based off it's name.
@@ -142,7 +141,7 @@ class ThemeManager():
         colors_file = theme_folder / Path("colors.txt")
 
         if colors_file.exists() is False:
-            raise FileNotFoundError(f"Could not find colors file in theme '{theme_folder.name}''")
+            return []
 
         # Retrieve all the colors
         colors = []
@@ -187,6 +186,9 @@ class ThemeManager():
                 init, deinit = self.get_controls(previous_theme)
 
                 subprocess.call(f"{str(deinit)}")
+
+                # Empty the theme cache file
+                open(cache_file, "w").close()
 
     def load_theme(self, theme_to_load: str):
         """Attempts to load a theme.
