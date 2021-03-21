@@ -45,8 +45,6 @@ class ThemeManager():
         if themes_folder.exists() is False:
             raise ValueError("Themes folder does not exist.")
 
-
-
     @staticmethod
     def _iter_structure(root: Path, structure: dict) -> (Path, bool):
         """Iterates through a given structure and yields the path
@@ -180,7 +178,12 @@ class ThemeManager():
         """Unloads the currently loaded theme.
         """
 
-        previous_theme = self.get_theme_folder(self.get_last_theme())
+        last_theme_name = self.get_last_theme()
+
+        if last_theme_name is None:
+            return
+
+        previous_theme = self.get_theme_folder(last_theme_name)
 
         # Deinitialize the previous theme if there was one defined.
         if previous_theme is not None:
@@ -214,6 +217,9 @@ class ThemeManager():
         # Initialze the next theme.
         init, deinit = self.get_controls(next_theme)
         subprocess.call(f"{str(init)}")
+
+        with open(cache_file, "w") as cache:
+            cache.write(theme_to_load)
 
     def new_theme(self, new_theme_name: str) -> str:
         """Creates a new template theme with a certain name.
